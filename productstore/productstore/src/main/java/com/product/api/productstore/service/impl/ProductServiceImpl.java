@@ -36,7 +36,7 @@ public class ProductServiceImpl implements ProductService {
      * @return product
      */
     @Override
-    public ProductEntity findById(Long id) {
+    public ProductEntity findById(final Long id) {
         Optional<ProductEntity> product = productRepository.findById(id);
         return product.orElse(null);
     }
@@ -48,7 +48,7 @@ public class ProductServiceImpl implements ProductService {
      * @return product published
      */
     @Override
-    public ProductEntity publishProduct(ProductEntity productEntity) {
+    public ProductEntity publishProduct(final ProductEntity productEntity) throws Exception {
         productEntity.setPublish(true);
         return updateProduct(productEntity);
     }
@@ -60,8 +60,13 @@ public class ProductServiceImpl implements ProductService {
      * @return product updated
      */
     @Override
-    public ProductEntity updateProduct(ProductEntity productEntity) {
-        return productRepository.save(productEntity);
+    public ProductEntity updateProduct(final ProductEntity productEntity) throws Exception {
+        ProductEntity product = findById(productEntity.getId());
+        if (product != null) {
+            return productRepository.save(productEntity);
+        } else {
+            throw new Exception("Not found!");
+        }
     }
 
     /**
@@ -73,7 +78,7 @@ public class ProductServiceImpl implements ProductService {
      * @throws Exception exception
      */
     @Override
-    public ProductEntity unPublishProduct(ProductEntity productEntity, String userName) throws Exception {
+    public ProductEntity unPublishProduct(final ProductEntity productEntity, final String userName) throws Exception {
         if (StringUtils.equals(productEntity.getOwner().getUserName(), userName)) {
             productEntity.setPublish(false);
             return updateProduct(productEntity);

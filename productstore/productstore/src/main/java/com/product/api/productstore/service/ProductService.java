@@ -13,9 +13,9 @@ public interface ProductService {
 
     ProductEntity findById(Long id);
 
-    ProductEntity publishProduct(ProductEntity productEntity);
+    ProductEntity publishProduct(ProductEntity productEntity) throws Exception;
 
-    ProductEntity updateProduct(ProductEntity productEntity);
+    ProductEntity updateProduct(ProductEntity productEntity) throws Exception;
 
     ProductEntity unPublishProduct(ProductEntity productEntity, String userName) throws Exception;
 

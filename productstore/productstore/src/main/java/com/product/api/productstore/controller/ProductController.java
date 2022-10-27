@@ -48,18 +48,19 @@ public class ProductController {
      * @return product added
      */
     @PostMapping(path = "/add")
-    public ProductDto add(@RequestBody ProductEntity productEntity) {
+    public ProductDto add(@RequestBody ProductEntity productEntity) throws Exception {
         return ModelMapperUtil.map(productService.publishProduct(productEntity), ProductDto.class);
     }
 
     /**
      * Update product.
      *
-     * @param productEntity product entity
+     * @param product product dto
      * @return product updated
      */
     @PutMapping(path = "/update")
-    ProductDto update(@RequestBody ProductEntity productEntity) {
+    ProductDto update(@RequestBody ProductDto product) throws Exception {
+        ProductEntity productEntity = ModelMapperUtil.map(product, ProductEntity.class);
         return ModelMapperUtil.map(productService.updateProduct(productEntity), ProductDto.class);
     }
 
@@ -83,7 +84,7 @@ public class ProductController {
      * @return product published
      */
     @PostMapping(path = "/publish/{id}")
-    public ProductDto publicProduct(@PathVariable("id") Long id) {
+    public ProductDto publicProduct(@PathVariable("id") Long id) throws Exception {
         ProductEntity productEntity = productService.findById(id);
         return ModelMapperUtil.map(productService.publishProduct(productEntity), ProductDto.class);
     }

@@ -1,6 +1,7 @@
 package com.product.api.productstore.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,6 +14,7 @@ import java.io.Serializable;
 @Getter
 @Setter
 @NoArgsConstructor
+@Builder
 public class UserDto implements Serializable {
 
     private static final long serialVersionUID = 6078520215036749655L;
