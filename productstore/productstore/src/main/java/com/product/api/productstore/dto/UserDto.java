@@ -37,7 +37,6 @@ public class UserDto implements Serializable {
     /**
      * user password
      */
-    @JsonIgnore
     private String password;
 
     public UserDto(Long id, String userName, String pseudonym, String password) {

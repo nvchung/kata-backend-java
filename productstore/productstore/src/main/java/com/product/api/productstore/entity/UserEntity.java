@@ -11,7 +11,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import java.io.Serializable;
 import java.util.List;
 
 @Getter
@@ -23,7 +22,7 @@ public class UserEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private @Id Long id;
     @Column(name = "USER_NAME")
-    private String userName;
+    private String username;
     @Column(name = "PSEUDONYM")
     private String pseudonym;
     @Column(name = "PASSWORD")
@@ -32,9 +31,9 @@ public class UserEntity {
     @OneToMany(mappedBy = "owner")
     private List<ProductEntity> productEntities;
 
-    public UserEntity(Long id, String userName, String pseudonym, String password) {
+    public UserEntity(Long id, String username, String pseudonym, String password) {
         this.id = id;
-        this.userName = userName;
+        this.username = username;
         this.pseudonym = pseudonym;
         this.password = password;
     }

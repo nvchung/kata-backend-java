@@ -79,7 +79,7 @@ public class ProductServiceImpl implements ProductService {
      */
     @Override
     public ProductEntity unPublishProduct(final ProductEntity productEntity, final String userName) throws Exception {
-        if (StringUtils.equals(productEntity.getOwner().getUserName(), userName)) {
+        if (StringUtils.equals(productEntity.getOwner().getUsername(), userName)) {
             productEntity.setPublish(false);
             return updateProduct(productEntity);
         } else {

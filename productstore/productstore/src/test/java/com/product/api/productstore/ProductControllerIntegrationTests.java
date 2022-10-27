@@ -126,21 +126,63 @@ public class ProductControllerIntegrationTests {
 
         //Given
         Long productId = 1L;
-        ProductEntity entity = productRepository.findById(productId).get();
-        entity.setDescription("updated_desc");
-        entity.setTitle("updated_title");
-        ProductDto updateProduct = ModelMapperUtil.map(entity, ProductDto.class);
+
 
         // When
-        ResultActions response = mockMvc.perform(post("/products/publish")
-                .header(AUTHORIZATION, BEARER + token)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(updateProduct)));
+        ResultActions response = mockMvc.perform(post("/products/publish/{id}",  productId)
+                .header(AUTHORIZATION, BEARER + token));
 
         // Then
         response.andExpect(status().isOk())
                 .andDo(print())
-                .andExpect(jsonPath("$.description", is(updateProduct.getDescription())))
-                .andExpect(jsonPath("$.title", is(updateProduct.getTitle())));
+                .andExpect(jsonPath("$.publish", is(true)));
+    }
+
+    @Sql({"classpath:schema.sql", "classpath:data.sql"})
+    @Test
+    public void testPublishProduct_noAuth_returnsUnauthorized() throws Exception {
+
+        // Given
+        Long productId = 1L;
+
+        // When
+        ResultActions response = mockMvc.perform(post("/products/publish/{id}",  productId)
+                .contentType(MediaType.APPLICATION_JSON));
+
+        // Then
+        response.andExpect(status().isUnauthorized());
+    }
+
+    @Sql({"classpath:schema.sql", "classpath:data.sql"})
+    @Test
+    public void testUnPublishProduct_Auth_returnsOk() throws Exception {
+
+        //Given
+        Long productId = 2L;
+
+
+        // When
+        ResultActions response = mockMvc.perform(post("/products/unpublish/{id}",  productId)
+                .header(AUTHORIZATION, BEARER + token));
+
+        // Then
+        response.andExpect(status().isOk())
+                .andDo(print())
+                .andExpect(jsonPath("$.publish", is(false)));
+    }
+
+    @Sql({"classpath:schema.sql", "classpath:data.sql"})
+    @Test
+    public void testUnPublishProduct_noAuth_returnsUnauthorized() throws Exception {
+
+        // Given
+        Long productId = 2L;
+
+        // When
+        ResultActions response = mockMvc.perform(post("/products/unpublish/{id}",  productId)
+                .contentType(MediaType.APPLICATION_JSON));
+
+        // Then
+        response.andExpect(status().isUnauthorized());
     }
 }
