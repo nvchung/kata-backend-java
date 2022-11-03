@@ -59,7 +59,12 @@ public class WebSecurityConfig {
 
             http.csrf().disable()
                 // dont authenticate this particular request
-                .authorizeRequests().antMatchers("/authenticate", "/register", "/products/all").permitAll().
+                .authorizeRequests().antMatchers(
+                        "/authenticate",
+                            "/register",
+                            "/products/all",
+                            "/v3/api-docs/",
+                            "/swagger-ui/index.html").permitAll().
                 // all other requests need to be authenticated
                         anyRequest().authenticated().and().
                         exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and().sessionManagement()

@@ -13,6 +13,8 @@ public interface ProductService {
 
     ProductEntity findById(Long id);
 
+    ProductEntity save(ProductEntity productEntity) throws Exception;
+
     ProductEntity publishProduct(ProductEntity productEntity) throws Exception;
 
     ProductEntity updateProduct(ProductEntity productEntity) throws Exception;

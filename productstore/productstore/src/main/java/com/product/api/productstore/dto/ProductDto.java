@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
@@ -27,6 +28,7 @@ public class ProductDto implements Serializable {
     /*
      * Product title.
      */
+    @NotBlank
     private String title;
 
     /*
